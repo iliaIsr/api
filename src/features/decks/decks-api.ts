@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { FormValues } from './AddNewDeckForm/AddNewDeckForm.tsx'
 
 export type GetResponseType = {
   items: ItemsType[]
@@ -15,7 +16,7 @@ type AuthorType = {
   id: string
   name: string
 }
-type ItemsType = {
+export type ItemsType = {
   author: AuthorType
   isFavorite: boolean
   id: string
@@ -27,6 +28,7 @@ type ItemsType = {
   updated: string
   cardsCount: number
 }
+export type AddDeckRespType = Omit<ItemsType, 'author'|'isFavorite'>
 
 export const instance = axios.create({
   baseURL: 'https://api.flashcards.andrii.es',
@@ -38,5 +40,8 @@ export const instance = axios.create({
 export const desksApi = {
   getDesks() {
     return instance.get<GetResponseType>('/v2/decks')
+  },
+  addDecks(data:FormValues) {
+    return instance.post<AddDeckRespType>('/v1/decks', data)
   }
 }

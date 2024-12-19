@@ -30,6 +30,19 @@ export type ItemsType = {
 }
 export type AddDeckRespType = Omit<ItemsType, 'author'|'isFavorite'>
 
+type RespType = {
+  author: AuthorType
+  cardsCount: number
+  cover: string
+  created: string
+  id: string
+  isPrivate: boolean
+  name: string
+  userId: string
+  updated: string
+
+}
+
 export const instance = axios.create({
   baseURL: 'https://api.flashcards.andrii.es',
   headers: {
@@ -42,6 +55,6 @@ export const desksApi = {
     return instance.get<GetResponseType>('/v2/decks')
   },
   addDecks(data:FormValues) {
-    return instance.post<AddDeckRespType>('/v1/decks', data)
+    return instance.post<ItemsType>('/v1/decks', data)
   }
 }

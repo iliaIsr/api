@@ -15,7 +15,11 @@ export const decksReducer = (state: DecksState = initialState, action: DecksActi
     case 'GET_DECKS':
       return {...state, decks:action.decks}
     case 'ADD-DECK':{
-      return {...state}
+      console.log('action',action.deck)
+      console.log(state.decks)
+      const newDeck=action.deck
+      return {...state,decks: [newDeck, ...state.decks] }
+
     }
     default:
       return state
@@ -28,9 +32,9 @@ export const getDesksAC=(decks:ItemsType[])=>{
   return {type:"GET_DECKS" as const,
     decks}
 }
-export const addDeckAC=(value:FormValues)=>{
+export const addDeckAC=(deck:ItemsType)=>{
   return {type:"ADD-DECK" as const,
-  value}
+  deck: deck}
 }
 
 
